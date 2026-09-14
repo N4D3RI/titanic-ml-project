@@ -10,6 +10,9 @@ on:
   workflow_dispatch:        # lets you run it by hand from the Actions tab
 
 env:
+  # The Docker Hub namespace is not secret, so it lives here rather than in a
+  # secret. One less value that can be pasted with a stray newline.
+  DOCKERHUB_USER: naderi11
   IMAGE_NAME: titanic-survival-api
 
 jobs:
@@ -24,16 +27,23 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        env:
+          TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          # Secrets pasted through a browser often pick up a trailing newline,
+          # which makes Docker build a malformed Authorization header.
+          CLEAN_TOKEN=$(printf '%s' "$TOKEN" | tr -d '[:space:]')
+          if [ -z "$CLEAN_TOKEN" ]; then
+            echo "DOCKERHUB_TOKEN is empty" >&2
+            exit 1
+          fi
+          printf '%s' "$CLEAN_TOKEN" | docker login -u "$DOCKERHUB_USER" --password-stdin
 
       - name: Derive image tags
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest
             type=raw,value=v1.0
@@ -88,4 +98,4 @@ jobs:
           echo '```' >> $GITHUB_STEP_SUMMARY
           echo "${{ steps.meta.outputs.tags }}" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
-          echo "Pull it with: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest" >> $GITHUB_STEP_SUMMARY
+          echo "Pull it with: docker pull $DOCKERHUB_USER/$IMAGE_NAME:latest" >> $GITHUB_STEP_SUMMARY
