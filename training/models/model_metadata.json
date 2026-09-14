@@ -1,0 +1,51 @@
+{
+  "model_type": "RandomForestClassifier",
+  "training_date": "2026-09-14T22:39:15.246061",
+  "accuracy": 0.8156424581005587,
+  "feature_names": [
+    "Pclass",
+    "Sex",
+    "Age",
+    "SibSp",
+    "Parch",
+    "Fare",
+    "Embarked",
+    "FamilySize",
+    "IsAlone",
+    "Title",
+    "AgeGroup",
+    "FareGroup"
+  ],
+  "model_parameters": {
+    "bootstrap": true,
+    "ccp_alpha": 0.0,
+    "class_weight": null,
+    "criterion": "gini",
+    "max_depth": 10,
+    "max_features": "sqrt",
+    "max_leaf_nodes": null,
+    "max_samples": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 2,
+    "min_samples_split": 5,
+    "min_weight_fraction_leaf": 0.0,
+    "n_estimators": 100,
+    "n_jobs": null,
+    "oob_score": false,
+    "random_state": 42,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "preprocessing_info": {
+    "age_fillna": "median",
+    "embarked_fillna": "mode",
+    "fare_fillna": "median",
+    "new_features": [
+      "FamilySize",
+      "IsAlone",
+      "Title",
+      "AgeGroup",
+      "FareGroup"
+    ]
+  }
+}

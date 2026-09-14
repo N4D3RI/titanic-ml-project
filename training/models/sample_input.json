@@ -1,0 +1,9 @@
+{
+  "Pclass": 3,
+  "Sex": "male",
+  "Age": 25.0,
+  "SibSp": 0,
+  "Parch": 0,
+  "Fare": 8.05,
+  "Embarked": "S"
+}
