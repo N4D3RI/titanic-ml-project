@@ -80,6 +80,20 @@ jobs:
             | tee /tmp/pred.json
           grep -q '"survived"' /tmp/pred.json
 
+          # Assert the exact response contract, not just a 200.
+          # A renamed or missing field must fail the build, not the review.
+          for field in survived survival_probability prediction_confidence passenger_profile; do
+            grep -q "\"$field\"" /tmp/pred.json || { echo "MISSING FIELD: $field" >&2; exit 1; }
+          done
+
+          echo "--- batch prediction ---"
+          curl -sf -X POST http://localhost:8000/predict-batch \
+            -H "Content-Type: application/json" \
+            -d '[{"Pclass":1,"Sex":"female","Age":30.0,"SibSp":0,"Parch":0,"Fare":100.0,"Embarked":"C"}]' \
+            | tee /tmp/batch.json
+          grep -q '"prediction_confidence"' /tmp/batch.json
+          grep -q '"count"' /tmp/batch.json
+
           docker rm -f api
 
       - name: Push to Docker Hub

@@ -44,7 +44,7 @@ curl -X POST "http://localhost:8000/predict" \
 {
   "survived": 1,
   "survival_probability": 0.9647,
-  "confidence": "High",
+  "prediction_confidence": "High",
   "passenger_profile": {
     "class": "Class 1",
     "gender": "female",

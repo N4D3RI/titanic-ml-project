@@ -60,7 +60,7 @@ class PassengerInput(BaseModel):
 class PredictionOutput(BaseModel):
     survived: int                     # 0 or 1
     survival_probability: float       # Probability of survival
-    confidence: str                   # High, Medium, or Low
+    prediction_confidence: str        # High, Medium, or Low
     passenger_profile: Dict[str, Any]  # Passenger characteristics
 
 
@@ -179,7 +179,7 @@ async def predict_survival(passenger: PassengerInput):
         return PredictionOutput(
             survived=prediction,
             survival_probability=round(probability, 4),
-            confidence=confidence,
+            prediction_confidence=confidence,
             passenger_profile=passenger_profile,
         )
     except Exception as e:  # noqa: BLE001
