@@ -9,8 +9,11 @@ A machine learning API that predicts passenger survival on the Titanic. A Random
 ## Run it with one command
 
 ```bash
+docker pull naderi11/titanic-survival-api:latest
 docker run -p 8000:8000 naderi11/titanic-survival-api:latest
 ```
+
+`docker run` reuses a cached local image if you already have one, so pull first to be sure you are on the current build. Confirm with `docker images --digests naderi11/titanic-survival-api`.
 
 Then open http://localhost:8000/docs for the interactive API documentation.
 

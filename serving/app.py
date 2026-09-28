@@ -12,7 +12,7 @@ from pydantic import BaseModel
 app = FastAPI(
     title="Titanic Survival Prediction API",
     description="Predict passenger survival on the Titanic using machine learning",
-    version="1.0.0",
+    version="1.1.0",
 )
 
 MODELS_DIR = os.environ.get("MODELS_DIR", "models")
