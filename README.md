@@ -4,6 +4,8 @@ A machine learning API that predicts passenger survival on the Titanic. A Random
 
 **Model accuracy: 81.6%** on a held-out 20% test split (RandomForestClassifier, 12 features).
 
+**Source code:** [github.com/N4D3RI/titanic-ml-project](https://github.com/N4D3RI/titanic-ml-project)
+
 ## Run it with one command
 
 ```bash
